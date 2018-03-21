@@ -1,12 +1,58 @@
 #include "34coins.hpp"
+#include <fstream>
+#include <regex>
 
 using std::cout;
 
+std::string saveFile = "/.config/unity3d/noio/Kingdom/storage_v34_AUTO.dat";
+
+std::string findCoins(const std::string &input) {
+  auto sc = input.find(':', input.find("coins", input.find("lostCrown")));
+  auto ec = input.find('}', input.find("coins", input.find("lostCrown"))) - sc;
+
+  return input.substr(sc + 1, ec - 1);
+}
+
+int getCoins() {
+  std::ifstream infile(saveFile);
+  std::string line;
+
+  if (!infile.good()) {
+    throw std::string("SaveFile does not exist: " + std::string(saveFile));
+  }
+
+  while (std::getline(infile, line)) {
+    std::string coins = findCoins(line);
+    if (coins.size() > 0) {
+      infile.close();
+      return std::stoi(coins);
+    }
+  }
+
+  infile.close();
+  throw std::string("Incompatible file format");
+}
+
+void add34Coins() {
+
+}
+
+
 int main() {
+
+  saveFile = std::getenv("HOME") + saveFile;
+
+  try {
+    getCoins();
+  } catch (std::string e) {
+    cout << e << "\n";
+    return -1;
+  }
+
   try {
     std::unique_ptr<MainWindow> win(new MainWindow());
     win->start();
-  } catch (const char *e) {
+  } catch (std::string e) {
     cout << e << "\n";
     return -1;
   }

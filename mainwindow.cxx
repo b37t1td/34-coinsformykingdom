@@ -29,7 +29,7 @@ MainWindow::MainWindow() {
 
   if (!renderer) {
 sdl_err:
-    throw "Unable to initialize SDL";
+    throw std::string("Unable to initialize SDL");
   }
 }
 
