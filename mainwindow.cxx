@@ -88,8 +88,10 @@ void MainWindow::renderWallet() {
 
   if (walletIsFull) {
     SDL_RenderCopy(renderer, walletFull, NULL, &wRect);
+    add34Coins(true);
   } else {
     SDL_RenderCopy(renderer, walletEmpty, NULL, &wRect);
+    add34Coins(false);
   }
 }
 

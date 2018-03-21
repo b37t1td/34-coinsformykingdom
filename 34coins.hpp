@@ -17,6 +17,7 @@ class MainWindow {
     MainWindow();
     ~MainWindow();
     void start();
+    bool walletIsFull = false;
 
   private:
     SDL_Window* window = nullptr;
@@ -28,9 +29,8 @@ class MainWindow {
 
     void renderBg();
     void renderWallet();
-
-    bool walletIsFull = false;
 };
 
+void add34Coins(bool fill);
 
 #endif
